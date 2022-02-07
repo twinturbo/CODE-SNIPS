@@ -1,0 +1,62 @@
+git init 
+touch .gitignore
+echo init.sh  >> .gitignore
+echo init.sh >>  .git/.gitignore
+sleep 2
+echo "first add"
+git add .
+git commit -am "first commit"
+git remote add origin git@github.com:twinturbo/$1.git
+#git pull origin master --allow-unrelated-histories
+git add .
+git commit -am "Remote" 
+git push origin master
+ls -lt 
+sleep 2
+echo "folders"
+if [ -f "ChangeLog" ]; then
+echo  changelog exists
+else
+cp ../../Template/ChangeLog ChangeLog
+fi
+if [ -f "VersionLog" ] ; then
+echo verso exists
+else
+cp ../../Template/VersionLog VersionLog
+fi
+if [ -d "Front" ]; then 
+echo Front Exists
+else
+mkdir Front
+cp ../../Template/FrontPanels/* Front/ -r
+fi
+if [ -d "Boards" ]; then
+echo board exists
+else
+mkdir Boards
+touch Boards/a.txt
+cd Boards
+mkdir Front 
+touch Front/a.txt
+mkdir PCB
+touch PCB/a.txt
+cd ..
+fi
+
+ls -lt 
+echo "add more"
+git add .
+git commit -am "Initialised"
+echo "last push"
+git push origin master
+
+#git add .
+#git commit -am  "Finalised"
+#git push origin master
+#rm Front/a.txt
+#rm Boards/a.txt
+#rm Boards/Front/a.txt
+#rm Boards/PCB/a.txt
+#git add .
+#git commit -am "Clean" 
+#git push origin master
